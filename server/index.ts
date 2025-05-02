@@ -12,7 +12,7 @@ const app = express();
 // Middleware setup
 app.use(
   cors({
-    origin: ["*", "http://localhost:9000"],
+    origin: ["http://localhost:9000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -76,16 +76,14 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  const port = process.env.PORT || 9e3;
+  const port = process.env.PORT || 9000;
   server.listen(
-    process.env.NODE_ENV === "production"
-      ? { port }
-      : {
-          port,
-          host: "127.0.0.1",
-          backlog: 511,
-          exclusive: true
-        },
+    {
+      port,
+      host: "127.0.0.1",
+      backlog: 511,
+      exclusive: true,
+    },
     () => {
       log(`serving on port ${port}`);
     }
